@@ -36,7 +36,7 @@ def add_supply_to_winter_holidays(holiday_hash, supply)
   #   end
   # end
 
-  # direct iteration into winter
+  # direct iteration into :winter
   holiday_hash[:winter].each do |holiday, supplies|
     supplies << supply
   end
