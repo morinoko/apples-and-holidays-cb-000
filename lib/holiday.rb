@@ -27,14 +27,19 @@ def add_supply_to_winter_holidays(holiday_hash, supply)
   # add the second argument, which is a supply, to BOTH the
   # Christmas AND the New Year's arrays
 
-  holiday_hash.each do |season, holidays|
-    if season == :winter
-      holidays.each do |holiday, supplies|
-         supplies << supply
-      end
-    end
+  # long iteration
+  # holiday_hash.each do |season, holidays|
+  #   if season == :winter
+  #     holidays.each do |holiday, supplies|
+  #        supplies << supply
+  #     end
+  #   end
+  # end
+
+  # direct iteration into :winter
+  holiday_hash[:winter].each do |holiday, supplies|
+    supplies << supply
   end
-  holiday_hash
 end
 
 
@@ -53,7 +58,6 @@ def add_supply_to_memorial_day(holiday_hash, supply)
 
   # Using explicit keys
   holiday_hash[:spring][:memorial_day] << supply
-
   holiday_hash
 end
 
@@ -65,6 +69,12 @@ end
 
 def all_winter_holiday_supplies(holiday_hash)
   # return an array of all of the supplies that are used in the winter season
+
+  # Using .map
+  # holiday_hash[:winter].map do |holiday, supplies|
+  #   supplies
+  # end.flatten
+
   holiday_hash[:winter].values.flatten
 end
 
@@ -88,13 +98,9 @@ end
 def all_holidays_with_bbq(holiday_hash)
   # return an array of holiday names (as symbols) where supply lists
   # include the string "BBQ"
-  bbq_holidays = []
-  holiday_hash.each do |season, holidays_hash|
-    holidays_hash.each do |holiday, supplies|
-      if supplies.include?("BBQ")
-        bbq_holidays << holiday
-      end
+  holiday_hash.collect do |season, holidays_hash|
+    holidays_hash.collect do |holiday, supplies|
+      holiday if supplies.include?("BBQ")
     end
-  end
-  bbq_holidays
+  end.flatten.compact
 end
