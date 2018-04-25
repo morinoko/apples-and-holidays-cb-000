@@ -70,11 +70,11 @@ end
 def all_winter_holiday_supplies(holiday_hash)
   # return an array of all of the supplies that are used in the winter season
 
-  # Using .map 
+  # Using .map
   # holiday_hash[:winter].map do |holiday, supplies|
   #   supplies
   # end.flatten
-  
+
   holiday_hash[:winter].values.flatten
 end
 
@@ -98,13 +98,9 @@ end
 def all_holidays_with_bbq(holiday_hash)
   # return an array of holiday names (as symbols) where supply lists
   # include the string "BBQ"
-  bbq_holidays = []
-  holiday_hash.each do |season, holidays_hash|
-    holidays_hash.each do |holiday, supplies|
-      if supplies.include?("BBQ")
-        bbq_holidays << holiday
-      end
+  holiday_hash.collect do |season, holidays_hash|
+    holidays_hash.collect do |holiday, supplies|
+      holiday if supplies.include?("BBQ")
     end
-  end
-  bbq_holidays
+  end.flatten.compact
 end
